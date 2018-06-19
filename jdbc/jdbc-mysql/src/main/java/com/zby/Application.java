@@ -204,24 +204,6 @@ public class Application {
 		return str;
 	}
 
-	/**
-	 * 
-	 * @param str
-	 * @return
-	 * @description 把以下划线分割的字符串改为驼峰命名
-	 */
-	private static String switchToCamelCase(String str) {
-		String[] split = str.split("_");
-		if (split.length < 2) {
-			return upperFirst(str);
-		}
-		String result = "";
-		for (String string : split) {
-			result += upperFirst(string);
-		}
-		return result;
-	}
-
 	private static String replaceColumn_(String str) {
 		String[] split = str.split("_");
 		if (split.length < 2) {
