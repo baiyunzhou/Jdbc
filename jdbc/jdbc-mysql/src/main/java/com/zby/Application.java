@@ -35,14 +35,14 @@ public class Application {
 		Connection connection = DriverManager.getConnection(
 				"jdbc:mysql://zby:3306/scsit?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true", "root",
 				"123456");
-		boolean autoCommit = connection.getAutoCommit();
-		System.out.println(autoCommit);
+		// 获取数据库元数据
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		// 获取数据库所有表
 		ResultSet dbResultSet = databaseMetaData.getTables(null, "%", "%", new String[] { "TABLE" });
 		while (dbResultSet.next()) {
 			TableInfo tableInfo = new TableInfo();
 			String tableName = dbResultSet.getString("TABLE_NAME");
-			tableInfo.setName(replaceTable_(tableName));
+			tableInfo.setName(switchToCamelCase(tableName));
 			tableInfo.setComment(getTableComment(connection, tableName));
 			ResultSet tbResultSet = databaseMetaData.getColumns(null, "%", tableName, "%"); // 查询表中的所有字段
 			List<ColumnInfo> columnInfos = new ArrayList<>();
@@ -199,22 +199,23 @@ public class Application {
 		fileWriter.close();
 	}
 
-	private static String upperFirst(String str) {
-		str = str.substring(0, 1).toUpperCase() + str.substring(1);
-		return str;
-	}
-
 	private static String lowerFirst(String str) {
 		str = str.substring(0, 1).toLowerCase() + str.substring(1);
 		return str;
 	}
 
-	private static String replaceTable_(String str) {
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 * @description 把以下划线分割的字符串改为驼峰命名
+	 */
+	private static String switchToCamelCase(String str) {
 		String[] split = str.split("_");
-		String result = "";
 		if (split.length < 2) {
-			return str;
+			return upperFirst(str);
 		}
+		String result = "";
 		for (String string : split) {
 			result += upperFirst(string);
 		}
