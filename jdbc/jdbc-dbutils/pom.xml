@@ -6,5 +6,12 @@
 		<artifactId>jdbc</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>jdbc-mysql</artifactId>
+	<artifactId>jdbc-dbutils</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+			<version>1.7</version>
+		</dependency>
+	</dependencies>
 </project>

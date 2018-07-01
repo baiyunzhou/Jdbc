@@ -1,4 +1,4 @@
-package com.zby;
+package com.zby.meta;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,9 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.zby.meta.ColumnInfo;
-import com.zby.meta.TableInfo;
 
 /**
  * 
@@ -42,7 +39,7 @@ public class Application {
 		while (dbResultSet.next()) {
 			TableInfo tableInfo = new TableInfo();
 			String tableName = dbResultSet.getString("TABLE_NAME");
-			tableInfo.setName(switchToCamelCase(tableName));
+			tableInfo.setName(StringUtil.switchToCamelCase(tableName));
 			tableInfo.setComment(getTableComment(connection, tableName));
 			ResultSet tbResultSet = databaseMetaData.getColumns(null, "%", tableName, "%"); // 查询表中的所有字段
 			List<ColumnInfo> columnInfos = new ArrayList<>();
@@ -146,7 +143,7 @@ public class Application {
 		sb.append("\r\n");
 		sb.append(" **/");
 		sb.append("\r\n");
-		sb.append("public class " + upperFirst(tableInfo.getName()) + " implements Serializable {");
+		sb.append("public class " + StringUtil.upperFirst(tableInfo.getName()) + " implements Serializable {");
 		sb.append("\r\n");
 		sb.append("\r\n");
 		sb.append("\tprivate static final long serialVersionUID = 1L;");
@@ -166,7 +163,8 @@ public class Application {
 			sb.append("\r\n");
 		}
 		for (ColumnInfo columnInfo : columnInfos) {
-			sb.append("\tpublic " + columnInfo.getJavaType() + " get" + upperFirst(columnInfo.getName()) + "() {");
+			sb.append("\tpublic " + columnInfo.getJavaType() + " get" + StringUtil.upperFirst(columnInfo.getName())
+					+ "() {");
 			sb.append("\r\n");
 			sb.append("\t\t");
 			sb.append("return " + columnInfo.getName() + ";");
@@ -174,8 +172,8 @@ public class Application {
 			sb.append("\t" + "}");
 			sb.append("\r\n");
 			sb.append("\r\n");
-			sb.append("\tpublic void set" + upperFirst(columnInfo.getName()) + "(" + columnInfo.getJavaType() + " "
-					+ columnInfo.getName() + ") {");
+			sb.append("\tpublic void set" + StringUtil.upperFirst(columnInfo.getName()) + "(" + columnInfo.getJavaType()
+					+ " " + columnInfo.getName() + ") {");
 			sb.append("\r\n");
 			sb.append("\t\t");
 			sb.append("this." + columnInfo.getName() + " = " + columnInfo.getName() + ";");
@@ -189,7 +187,7 @@ public class Application {
 		if (!path.exists()) {
 			path.mkdirs();
 		}
-		File file = new File(path, upperFirst(tableInfo.getName()) + ".java");
+		File file = new File(path, StringUtil.upperFirst(tableInfo.getName()) + ".java");
 		System.out.println(file.getAbsolutePath());
 		if (!file.exists()) {
 			file.createNewFile();
@@ -211,7 +209,7 @@ public class Application {
 		}
 		String result = "";
 		for (String string : split) {
-			result += upperFirst(string);
+			result += StringUtil.upperFirst(string);
 		}
 		return lowerFirst(result);
 	}

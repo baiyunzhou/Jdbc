@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- Content Model : (properties?, settings?, typeAliases?, typeHandlers?, 
+	objectFactory?, objectWrapperFactory?, reflectorFactory?, plugins?, environments?, 
+	databaseIdProvider?, mappers?) dtd约束顺序给解析顺序不一致，请给我一个合理的解释！ -->
+<configuration>
+	<environments default="default">
+		<environment id="default">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://zby:3306/zby?characterEncoding=utf-8" />
+				<property name="username" value="root" />
+				<property name="password" value="123456" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!-- 	<mapper class="" url="" resource=""/> -->
+		<!-- <mapper class="com.zby.dao.UserMapper"/> -->
+		<package name="com.zby.dao"/>
+		
+	</mappers>
+
+</configuration>

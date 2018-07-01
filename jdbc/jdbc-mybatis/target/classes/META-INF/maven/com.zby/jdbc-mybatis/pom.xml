@@ -6,5 +6,11 @@
 		<artifactId>jdbc</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>jdbc-mysql</artifactId>
+	<artifactId>jdbc-mybatis</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+	</dependencies>
 </project>
